@@ -14,20 +14,22 @@
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="#">Logout</a>
+          <button class="btn btn-danger" id="logoutButton">Logout</button>
         </li>
       </ul>
     </div>
   </nav>
 
   <!-- Botão de criar turma -->
-  <div class="container mt-4">
-    <h2 class="text-center">Olá Coordenador <span id="nomeCoordenador"></span></h2>
+<div class="container mt-4">
+  <h2 class="text-center">Olá Coordenador <span id="nomeCoordenador"></span></h2>
+  <div class="text-right">
     <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#createTurmaModal">Criar Turma</button>
-    <div class="row" id="turmasContainer">
-      <!-- As turmas serão inseridas aqui -->
-    </div>
   </div>
+  <div class="row" id="turmasContainer">
+    <!-- As turmas serão inseridas aqui -->
+  </div>
+</div>
 
   <!-- Formulário Modal para criar turma -->
   <div class="modal fade" id="createTurmaModal" tabindex="-1" role="dialog" aria-labelledby="createTurmaModalLabel" aria-hidden="true">
