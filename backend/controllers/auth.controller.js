@@ -33,7 +33,7 @@ exports.primeiroAdmin = async () => {
     try {
       const adminExists = await Usuario.findOne({ email: 'primeiro@admin.com' });
       if (!adminExists) {
-        const response = await this.reg({
+        const response = await reg({
           nome: 'Admin',
           email: 'primeiro@admin.com',
           senha: 'senhaSegura456',
@@ -61,7 +61,7 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     const token = jwt.sign({ id: usuario._id }, config.secret, { expiresIn: '1h' });
-    res.json({ token });
+    res.json({ token, tipo: usuario.tipo, nome: usuario.nome });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

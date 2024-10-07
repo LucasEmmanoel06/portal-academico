@@ -37,9 +37,7 @@ exports.createTurma = async (req, res) => {
     const turma = new Turma({
       nome,
       ano,
-      semestre,
-      alunos,
-      disciplina
+      alunos
     });
     await turma.save();
     res.status(201).json(turma);
