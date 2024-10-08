@@ -66,7 +66,10 @@ $(document).ready(function() {
                 <div class="col-12 mb-3">
                   <div class="card comunicado-card">
                     <div class="card-body">
-                      <h5 class="card-title">${nomeAutor} - ${new Date(comunicado.data).toLocaleString()}</h5>
+                      <div class="d-flex justify-content-between">
+                        <h5 class="card-title">${nomeAutor} - ${new Date(comunicado.data).toLocaleString()}</h5>
+                        <button class="btn btn-danger deletar-comunicado" data-id="${comunicado._id}">Deletar</button>
+                      </div>
                       <p class="card-text">${comunicado.mensagem}</p>
                     </div>
                   </div>
