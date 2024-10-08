@@ -10,42 +10,6 @@ $(document).ready(function() {
   console.log('autorId recuperado:', autorId); // Adicione este log para verificar o autorId
   $('#nomeTurma').text(turmaNome);
 
-  // Função para buscar e exibir as informações da turma
-  function loadTurmaInfo() {
-    $.ajax({
-      type: 'GET',
-      url: `http://localhost:3000/api/turmas/${turmaId}`,
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      },
-      success: function(response) {
-        $('#anoTurma').text(response.ano);
-        $('#alunosTurma').text(response.alunos.join(', '));
-      },
-      error: function(xhr) {
-        console.log('Erro ao buscar informações da turma:', xhr);
-      }
-    });
-  }
-
-  // Função para buscar o nome do autor
-  function getAutorNome(autorId, callback) {
-    $.ajax({
-      type: 'GET',
-      url: `http://localhost:3000/api/usuarios/${autorId}`,
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
-      },
-      success: function(response) {
-        callback(response.nome);
-      },
-      error: function(xhr) {
-        console.log('Erro ao buscar nome do autor:', xhr);
-        callback('Desconhecido');
-      }
-    });
-  }
-
   // Função para buscar e exibir os comunicados
   function loadComunicados() {
     $.ajax({
@@ -78,10 +42,68 @@ $(document).ready(function() {
               comunicadosContainer.append(comunicadoCard);
             });
           });
+
+          // Adiciona o evento de clique ao botão "Deletar"
+          $(document).on('click', '.deletar-comunicado', function() {
+            const comunicadoId = $(this).data('id');
+            if (confirm('Tem certeza que deseja deletar este comunicado?')) {
+              $.ajax({
+                url: `http://localhost:3000/api/comunicados/${comunicadoId}`,
+                type: 'DELETE',
+                headers: {
+                  'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function() {
+                  alert('Comunicado deletado com sucesso!');
+                  loadComunicados(); // Recarrega os comunicados após deletar
+                },
+                error: function() {
+                  alert('Erro ao deletar o comunicado.');
+                }
+              });
+            }
+          });
+
         }
       },
       error: function(xhr) {
         console.log('Erro ao buscar comunicados:', xhr);
+      }
+    });
+  }
+
+  // Função para buscar e exibir as informações da turma
+  function loadTurmaInfo() {
+    $.ajax({
+      type: 'GET',
+      url: `http://localhost:3000/api/turmas/${turmaId}`,
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      success: function(response) {
+        $('#anoTurma').text(response.ano);
+        $('#alunosTurma').text(response.alunos.join(', '));
+      },
+      error: function(xhr) {
+        console.log('Erro ao buscar informações da turma:', xhr);
+      }
+    });
+  }
+
+  // Função para buscar o nome do autor
+  function getAutorNome(autorId, callback) {
+    $.ajax({
+      type: 'GET',
+      url: `http://localhost:3000/api/usuarios/${autorId}`,
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      success: function(response) {
+        callback(response.nome);
+      },
+      error: function(xhr) {
+        console.log('Erro ao buscar nome do autor:', xhr);
+        callback('Desconhecido');
       }
     });
   }

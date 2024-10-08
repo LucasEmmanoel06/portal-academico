@@ -75,8 +75,6 @@ $(document).ready(function() {
     });
   }
 
-
-  
   // Função para criar uma nova turma
   $('#createTurmaForm').on('submit', function(event) {
     event.preventDefault();

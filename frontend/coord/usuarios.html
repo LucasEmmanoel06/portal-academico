@@ -3,9 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coordenador</title>
+  <title>Usuários do Sistema</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
+  <style>
+    .custom-hr {
+      border: 1px solid black;
+    }
+  </style>
 </head>
 <body>
   <!-- Barra de navegação -->
@@ -37,46 +42,43 @@
     </div>
   </nav>
 
-  <!-- Botão de criar turma -->
-<div class="container mt-4">
-  <h2 class="text-center">Olá Coordenador <span id="nomeCoordenador"></span></h2>
-  <div class="text-right">
-    <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#createTurmaModal">Criar Turma</button>
+  <!-- Título principal -->
+  <div class="container mt-5">
+    <h1 class="text-center">Usuários do Sistema</h1>
   </div>
-  <div class="row" id="turmasContainer">
-    <!-- As turmas serão inseridas aqui -->
-  </div>
-</div>
 
-  <!-- Formulário Modal para criar turma -->
-  <div class="modal fade" id="createTurmaModal" tabindex="-1" role="dialog" aria-labelledby="createTurmaModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="createTurmaModalLabel">Criar Nova Turma</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="createTurmaForm">
-            <div class="form-group">
-              <label for="nome">Nome</label>
-              <input type="text" class="form-control" id="nome" name="nome" required>
-            </div>
-            <div class="form-group">
-              <label for="ano">Ano</label>
-              <input type="number" class="form-control" id="ano" name="ano" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Criar</button>
-          </form>
-        </div>
+  <!-- Contêiner para a lista de usuários -->
+  <div class="container mt-4">
+    <div class="row">
+      <!-- Coordenadores -->
+      <div class="col-12 mb-4">
+        <h3>Coordenadores</h3>
+        <hr class="custom-hr">
+        <ul id="coordenadoresList" class="list-group">
+          <!-- Lista de coordenadores será inserida aqui -->
+        </ul>
+      </div>
+      <!-- Professores -->
+      <div class="col-12 mb-4">
+        <h3>Professores</h3>
+        <hr class="custom-hr">
+        <ul id="professoresList" class="list-group">
+          <!-- Lista de professores será inserida aqui -->
+        </ul>
+      </div>
+      <!-- Alunos -->
+      <div class="col-12 mb-4">
+        <h3>Alunos</h3>
+        <hr class="custom-hr">
+        <ul id="alunosList" class="list-group">
+          <!-- Lista de alunos será inserida aqui -->
+        </ul>
       </div>
     </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-  <script src="coordenador.js"></script>
+  <script src="usuarios.js"></script>
 </body>
 </html>
