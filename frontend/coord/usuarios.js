@@ -1,5 +1,8 @@
 $(document).ready(function() {
-  const token = localStorage.getItem('token');
+  // Verifica se o usuário está autenticado
+  if (!localStorage.getItem('token')) {
+    window.location.href = '../login.html';
+  }
 
   // Função para preencher a lista de usuários
   function preencherLista(url, listaId) {
@@ -7,7 +10,7 @@ $(document).ready(function() {
       url: `http://localhost:3000/api/usuarios${url}`,
       type: 'GET',
       headers: {
-        'Authorization': 'Bearer ' + token
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
       success: function(response) {
         const lista = $(listaId);

@@ -1,4 +1,9 @@
 $(document).ready(function() {
+  // Verifica se o usuário está autenticado
+  if (!localStorage.getItem('token')) {
+    window.location.href = '../login.html';
+  }
+  
   // Verifica se o usuário logado é coordenador
   const userType = localStorage.getItem('tipo');
   if (userType !== 'coordenador') {
