@@ -4,7 +4,7 @@ const Usuario = require('../models/usuarios.models');
 // @desc    Get all turmas
 // @route   GET /api/turmas
 // @access  Public
-exports.getTurma = async (req, res) => {
+exports.getTurmas = async (req, res) => {
   try {
     const turma = await Turma.find();
     res.json(turma);

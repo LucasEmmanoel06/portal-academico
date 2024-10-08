@@ -3,7 +3,7 @@ const Comunicado = require('../models/comunicados.models');
 // @desc    Get all comunicados
 // @route   GET /api/comunicados
 // @access  Public
-exports.getComunicado = async (req, res) => {
+exports.getComunicados = async (req, res) => {
   try {
     const comunicado = await Comunicado.find();
     res.json(comunicado);
@@ -71,6 +71,22 @@ exports.deleteComunicado = async (req, res) => {
       return res.status(404).json({ message: 'Comunicado não encontrado' });
     }
     res.json({ message: 'Comunicado deletado' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+// @desc    Get comunicados by turma id
+// @route   GET /api/comunicados/turma/:turmaId
+// @access  Public
+exports.getComunicadosByTurmaId = async (req, res) => {
+  try {
+    const comunicados = await Comunicado.find({ turma: req.params.turmaId });
+    if (comunicados.length === 0) {
+      return res.status(404).json({ message: 'Nenhum comunicado encontrado para essa turma' });
+    }
+    res.json(comunicados);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

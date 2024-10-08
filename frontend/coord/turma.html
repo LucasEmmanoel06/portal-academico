@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coordenador</title>
+  <title>Turma</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
 </head>
@@ -24,9 +24,6 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item ml-auto">
-          <a class="nav-link mr-4" href="#"><u>Registrar Usuário</u></a>
-        </li>
         <li class="nav-item">
           <button class="btn btn-danger" id="logoutButton">Logout</button>
         </li>
@@ -34,36 +31,35 @@
     </div>
   </nav>
 
-  <!-- Botão de criar turma -->
-<div class="container mt-4">
-  <h2 class="text-center">Olá Coordenador <span id="nomeCoordenador"></span></h2>
-  <div class="text-right">
-    <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#createTurmaModal">Criar Turma</button>
+  <!-- Caixa com o nome da turma -->
+  <div class="container mt-4">
+    <div class="jumbotron">
+      <h1 class="display-4" id="nomeTurma">Nome da Turma</h1>
+      <hr class="my-4">
+      <p><strong>Ano:</strong> <span id="anoTurma"></span></p>
+      <p><strong>Alunos:</strong> <span id="alunosTurma"></span></p>
+    </div>
+    <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#createComunicadoModal">Criar Comunicado</button>
+    <div class="row" id="comunicadosContainer">
+      <!-- Os comunicados serão inseridos aqui -->
+    </div>
   </div>
-  <div class="row" id="turmasContainer">
-    <!-- As turmas serão inseridas aqui -->
-  </div>
-</div>
 
-  <!-- Formulário Modal para criar turma -->
-  <div class="modal fade" id="createTurmaModal" tabindex="-1" role="dialog" aria-labelledby="createTurmaModalLabel" aria-hidden="true">
+  <!-- Formulário Modal para criar comunicado -->
+  <div class="modal fade" id="createComunicadoModal" tabindex="-1" role="dialog" aria-labelledby="createComunicadoModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="createTurmaModalLabel">Criar Nova Turma</h5>
+          <h5 class="modal-title" id="createComunicadoModalLabel">Criar Novo Comunicado</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form id="createTurmaForm">
+          <form id="createComunicadoForm">
             <div class="form-group">
-              <label for="nome">Nome</label>
-              <input type="text" class="form-control" id="nome" name="nome" required>
-            </div>
-            <div class="form-group">
-              <label for="ano">Ano</label>
-              <input type="number" class="form-control" id="ano" name="ano" required>
+              <label for="mensagem">Mensagem</label>
+              <textarea class="form-control" id="mensagem" name="mensagem" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Criar</button>
           </form>
@@ -74,6 +70,6 @@
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-  <script src="coordenador.js"></script>
+  <script src="turma.js"></script>
 </body>
 </html>
