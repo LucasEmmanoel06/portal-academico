@@ -29,6 +29,7 @@ $(document).ready(function() {
                     <h5 class="card-title">${turma.nome}</h5>
                     <p class="card-text">Ano: ${turma.ano}</p>
                     <a href="#" class="btn btn-primary ver-detalhes" data-id="${turma._id}" data-nome="${turma.nome}">Ver detalhes</a>
+                    <button class="btn btn-danger deletar-turma" data-id="${turma._id}">Deletar</button>
                   </div>
                 </div>
               </div>
@@ -44,6 +45,28 @@ $(document).ready(function() {
             localStorage.setItem('turmaNome', turmaNome);
             window.location.href = 'turma.html';
           });
+
+          // Adiciona o evento de clique ao botão "Deletar"
+          $('.deletar-turma').click(function() {
+            const turmaId = $(this).data('id');
+            if (confirm('Tem certeza que deseja deletar esta turma?')) {
+              $.ajax({
+                url: `http://localhost:3000/api/turmas/${turmaId}`,
+                type: 'DELETE',
+                headers: {
+                  'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                success: function() {
+                  alert('Turma deletada com sucesso!');
+                  loadTurmas(); // Recarrega as turmas após deletar
+                },
+                error: function() {
+                  alert('Erro ao deletar a turma.');
+                }
+              });
+            }
+          });
+
         }
       },
       error: function(xhr) {
@@ -52,6 +75,8 @@ $(document).ready(function() {
     });
   }
 
+
+  
   // Função para criar uma nova turma
   $('#createTurmaForm').on('submit', function(event) {
     event.preventDefault();
