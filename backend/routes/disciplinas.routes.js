@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const disciplinasController = require('../controllers/disciplinas.controller');
+const authMiddleware = require('../middleware/auth.middleware');
 
 router.get('/', authMiddleware, disciplinasController.getDisciplina);
 router.get('/:id', authMiddleware, disciplinasController.getDisciplinaById);

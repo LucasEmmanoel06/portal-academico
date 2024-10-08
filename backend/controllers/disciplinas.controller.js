@@ -33,12 +33,12 @@ exports.getDisciplinaById = async (req, res) => {
 // @route   POST /api/disciplinas
 // @access  Public
 exports.createDisciplina = async (req, res) => {
-  const { nome, descricao, professores } = req.body;
+  const { nome, professores, turmas } = req.body;
   try {
     const disciplina = new Disciplina({
       nome,
-      descricao,
-      professores
+      professores,
+      turmas
     });
     await disciplina.save();
     res.status(201).json(disciplina);

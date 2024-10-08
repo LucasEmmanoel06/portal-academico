@@ -82,7 +82,30 @@ $(document).ready(function() {
       },
       success: function(response) {
         $('#anoTurma').text(response.ano);
-        $('#alunosTurma').text(response.alunos.join(', '));
+
+        // Buscar nomes dos alunos
+        const alunoPromises = response.alunos.map(alunoId => {
+          return $.ajax({
+            type: 'GET',
+            url: `http://localhost:3000/api/usuarios/${alunoId}`,
+            headers: {
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+          });
+        });
+
+        // Esperar todas as requisições de alunos serem concluídas
+        Promise.all(alunoPromises).then(alunos => {
+          const alunoNomes = alunos.map(aluno => aluno.nome).join(', ');
+          $('#alunosTurma').text(alunoNomes);
+
+          // Preenche a lista de alunos no modal de remoção
+          const alunosList = $('#alunosList');
+          alunosList.empty();
+          alunos.forEach(aluno => {
+            alunosList.append(`<option value="${aluno._id}">${aluno.nome}</option>`);
+          });
+        });
       },
       error: function(xhr) {
         console.log('Erro ao buscar informações da turma:', xhr);
@@ -132,6 +155,54 @@ $(document).ready(function() {
       error: function(xhr) {
         console.log('Erro ao criar comunicado:', xhr);
       }
+    });
+  });
+
+  // Função para adicionar um aluno à turma
+  $('#addAlunoForm').on('submit', function(event) {
+    event.preventDefault();
+    const formData = {
+      email: $('#emailAluno').val()
+    };
+
+    $.ajax({
+      type: 'POST',
+      url: `http://localhost:3000/api/turmas/${turmaId}/add-aluno`,
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify(formData),
+      success: function(response) {
+        $('#addAlunoModal').modal('hide');
+        loadTurmaInfo(); // Recarrega as informações da turma após adicionar o aluno
+      },
+      error: function(xhr) {
+        console.log('Erro ao adicionar aluno:', xhr);
+      }
+    });
+  });
+
+  // Função para remover alunos da turma
+  $('#removeAlunoForm').on('submit', function(event) {
+    event.preventDefault();
+    const alunos = $('#alunosList').val(); // Array de IDs dos alunos selecionados
+
+    alunos.forEach(alunoId => {
+      $.ajax({
+        type: 'DELETE',
+        url: `http://localhost:3000/api/turmas/${turmaId}/remove-aluno/${alunoId}`,
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        success: function(response) {
+          $('#removeAlunoModal').modal('hide');
+          loadTurmaInfo(); // Recarrega as informações da turma após remover o aluno
+        },
+        error: function(xhr) {
+          console.log('Erro ao remover aluno:', xhr);
+        }
+      });
     });
   });
 
