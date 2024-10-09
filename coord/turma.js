@@ -14,7 +14,7 @@ $(document).ready(function() {
   function loadComunicados() {
     $.ajax({
       type: 'GET',
-      url: `http://localhost:3000/api/comunicados/turma/${turmaId}`,
+      url: `https://projeto-pi-zk6e.onrender.com/api/comunicados/turma/${turmaId}`,
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
@@ -60,7 +60,7 @@ $(document).ready(function() {
   function deleteComunicado(comunicadoId) {
     if (confirm('Tem certeza que deseja deletar este comunicado?')) {
       $.ajax({
-        url: `http://localhost:3000/api/comunicados/${comunicadoId}`,
+        url: `https://projeto-pi-zk6e.onrender.com/api/comunicados/${comunicadoId}`,
         type: 'DELETE',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -86,7 +86,7 @@ $(document).ready(function() {
   function loadTurmaInfo() {
     $.ajax({
       type: 'GET',
-      url: `http://localhost:3000/api/turmas/${turmaId}`,
+      url: `https://projeto-pi-zk6e.onrender.com/api/turmas/${turmaId}`,
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
@@ -97,7 +97,7 @@ $(document).ready(function() {
         const alunoPromises = response.alunos.map(alunoId => {
           return $.ajax({
             type: 'GET',
-            url: `http://localhost:3000/api/usuarios/${alunoId}`,
+            url: `https://projeto-pi-zk6e.onrender.com/api/usuarios/${alunoId}`,
             headers: {
               'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
@@ -131,7 +131,7 @@ $(document).ready(function() {
   function loadDisciplinas() {
     $.ajax({
       type: 'GET',
-      url: `http://localhost:3000/api/turmas/${turmaId}/disciplinas`,
+      url: `https://projeto-pi-zk6e.onrender.com/api/turmas/${turmaId}/disciplinas`,
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
@@ -155,7 +155,7 @@ $(document).ready(function() {
   function getAutorNome(autorId, callback) {
     $.ajax({
       type: 'GET',
-      url: `http://localhost:3000/api/usuarios/${autorId}`,
+      url: `https://projeto-pi-zk6e.onrender.com/api/usuarios/${autorId}`,
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
@@ -180,7 +180,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:3000/api/comunicados',
+      url: 'https://projeto-pi-zk6e.onrender.com/api/comunicados',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
         'Content-Type': 'application/json'
@@ -205,7 +205,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'POST',
-      url: `http://localhost:3000/api/turmas/${turmaId}/add-aluno`,
+      url: `https://projeto-pi-zk6e.onrender.com/api/turmas/${turmaId}/add-aluno`,
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
         'Content-Type': 'application/json'
@@ -229,7 +229,7 @@ $(document).ready(function() {
     alunos.forEach(alunoId => {
       $.ajax({
         type: 'DELETE',
-        url: `http://localhost:3000/api/turmas/${turmaId}/remove-aluno/${alunoId}`,
+        url: `https://projeto-pi-zk6e.onrender.com/api/turmas/${turmaId}/remove-aluno/${alunoId}`,
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
@@ -249,7 +249,7 @@ $(document).ready(function() {
     // Buscar todas as disciplinas ao abrir o modal
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:3000/api/disciplinas',
+      url: 'https://projeto-pi-zk6e.onrender.com/api/disciplinas',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
@@ -273,7 +273,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'POST',
-      url: `http://localhost:3000/api/disciplinas/${disciplinaId}/add-turma/${turmaId}`,
+      url: `https://projeto-pi-zk6e.onrender.com/api/disciplinas/${disciplinaId}/add-turma/${turmaId}`,
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
         'Content-Type': 'application/json'
@@ -293,7 +293,7 @@ $(document).ready(function() {
     // Buscar todas as disciplinas da turma ao abrir o modal
     $.ajax({
       type: 'GET',
-      url: `http://localhost:3000/api/turmas/${turmaId}/disciplinas`,
+      url: `https://projeto-pi-zk6e.onrender.com/api/turmas/${turmaId}/disciplinas`,
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
@@ -317,7 +317,7 @@ $(document).ready(function() {
     disciplinas.forEach(disciplinaId => {
       $.ajax({
         type: 'DELETE',
-        url: `http://localhost:3000/api/disciplinas/${disciplinaId}/remove-turma/${turmaId}`,
+        url: `https://projeto-pi-zk6e.onrender.com/api/disciplinas/${disciplinaId}/remove-turma/${turmaId}`,
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
