@@ -19,7 +19,7 @@ $(document).ready(function() {
         const turmasContainer = $('#turmasContainer');
         turmasContainer.empty();
         if (response.length === 0) {
-          turmasContainer.append('<div class="col-12 text-center"><p>Não há turmas criadas</p></div>');
+          turmasContainer.append('<div class="col-12 text-center"><h3>Não há turmas criadas</h3></div>');
         } else {
           response.forEach(turma => {
             const turmaCard = `
