@@ -7,7 +7,7 @@ $(document).ready(function() {
   // Função para preencher a lista de usuários
   function preencherLista(url, listaId) {
     $.ajax({
-      url: `http://localhost:3000/api/usuarios${url}`,
+      url: `https://projeto-pi-zk6e.onrender.com/api/usuarios${url}`,
       type: 'GET',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')

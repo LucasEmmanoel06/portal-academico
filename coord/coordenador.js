@@ -11,7 +11,7 @@ $(document).ready(function() {
   function loadTurmas() {
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:3000/api/turmas',
+      url: 'https://projeto-pi-zk6e.onrender.com/api/turmas',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
@@ -51,7 +51,7 @@ $(document).ready(function() {
             const turmaId = $(this).data('id');
             if (confirm('Tem certeza que deseja deletar esta turma?')) {
               $.ajax({
-                url: `http://localhost:3000/api/turmas/${turmaId}`,
+                url: `https://projeto-pi-zk6e.onrender.com/api/turmas/${turmaId}`,
                 type: 'DELETE',
                 headers: {
                   'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -85,7 +85,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:3000/api/turmas',
+      url: 'https://projeto-pi-zk6e.onrender.com/api/turmas',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
         'Content-Type': 'application/json'

@@ -21,7 +21,7 @@ $(document).ready(function() {
   function loadDisciplinas() {
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:3000/api/disciplinas',
+      url: 'https://projeto-pi-zk6e.onrender.com/api/disciplinas',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
@@ -37,7 +37,7 @@ $(document).ready(function() {
               const professorPromises = disciplina.professores.map(professorId => {
                 return $.ajax({
                   type: 'GET',
-                  url: `http://localhost:3000/api/usuarios/${professorId}`,
+                  url: `https://projeto-pi-zk6e.onrender.com/api/usuarios/${professorId}`,
                   headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                   }

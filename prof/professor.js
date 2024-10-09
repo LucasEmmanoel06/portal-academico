@@ -11,7 +11,7 @@ $(document).ready(function() {
   function loadTurmas() {
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:3000/api/turmas', // Endpoint para obter todas as turmas
+      url: 'https://projeto-pi-zk6e.onrender.com/api/turmas', // Endpoint para obter todas as turmas
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
