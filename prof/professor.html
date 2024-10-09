@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professor</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h2 class="text-center">Olá Professor <span id="nomeProfessor"></span></h2>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const nome = localStorage.getItem('nome');
+      document.getElementById('nomeProfessor').textContent = nome;
+    });
+  </script>
+</body>
+</html>
