@@ -27,7 +27,7 @@ $(document).ready(function() {
           const disciplinasContainer = $('#disciplinasContainer');
           disciplinasContainer.empty();
           if (response.length === 0) {
-            disciplinasContainer.append('<div class="col-12 text-center"><p>Não há disciplinas criadas</p></div>');
+            disciplinasContainer.append('<div class="col-12 text-center"><h3>Não há disciplinas criadas</h3></div>');
           } else {
             response.forEach(disciplina => {
               // Buscar nomes dos professores
