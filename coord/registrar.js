@@ -22,7 +22,7 @@ $(document).ready(function() {
     const token = localStorage.getItem('token');
 
     $.ajax({
-      url: 'https://projeto-pi-zk6e.onrender.com/api/auth/registrar',
+      url: 'http://localhost:3000/api/auth/registrar',
       type: 'POST',
       contentType: 'application/json',
       headers: {

@@ -8,7 +8,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'POST',
-      url: 'https://projeto-pi-zk6e.onrender.com/api/auth/login',
+      url: 'http://localhost:3000/api/auth/login',
       data: JSON.stringify(formData),
       contentType: 'application/json',
       success: function(response) {

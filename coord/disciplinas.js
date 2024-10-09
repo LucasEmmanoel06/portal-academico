@@ -19,7 +19,7 @@ $(document).ready(function() {
   function loadDisciplinas() {
     $.ajax({
       type: 'GET',
-      url: 'https://projeto-pi-zk6e.onrender.com/api/disciplinas',
+      url: 'http://localhost:3000/api/disciplinas',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
@@ -33,7 +33,7 @@ $(document).ready(function() {
             const professorPromises = disciplina.professores.map(professorId => {
               return $.ajax({
                 type: 'GET',
-                url: `https://projeto-pi-zk6e.onrender.com/api/usuarios/${professorId}`,
+                url: `http://localhost:3000/api/usuarios/${professorId}`,
                 headers: {
                   'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
@@ -49,7 +49,6 @@ $(document).ready(function() {
                     <div class="card-body">
                       <h5 class="card-title">${disciplina.nome}</h5>
                       <p class="card-text">Professores: ${professorNomes}</p>
-                      <p class="card-text">Turmas: ${turmaNomes}</p>
                       <button class="btn btn-primary adicionar-professor mb-2" data-id="${disciplina._id}">Adicionar Professor</button>
                       <button class="btn btn-warning remover-professor mb-2" data-id="${disciplina._id}">Remover Professor</button>
                       <button class="btn btn-danger deletar-disciplina mb-2" data-id="${disciplina._id}">Deletar</button>
@@ -72,7 +71,7 @@ $(document).ready(function() {
   function deleteDisciplina(disciplinaId) {
     if (confirm('Tem certeza que deseja deletar esta disciplina?')) {
       $.ajax({
-        url: `https://projeto-pi-zk6e.onrender.com/api/disciplinas/${disciplinaId}`,
+        url: `http://localhost:3000/api/disciplinas/${disciplinaId}`,
         type: 'DELETE',
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -109,7 +108,7 @@ $(document).ready(function() {
     // Buscar professores da disciplina selecionada
     $.ajax({
       type: 'GET',
-      url: `https://projeto-pi-zk6e.onrender.com/api/disciplinas/${disciplinaId}`,
+      url: `http://localhost:3000/api/disciplinas/${disciplinaId}`,
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
@@ -119,7 +118,7 @@ $(document).ready(function() {
         disciplina.professores.forEach(professorId => {
           $.ajax({
             type: 'GET',
-            url: `https://projeto-pi-zk6e.onrender.com/api/usuarios/${professorId}`,
+            url: `http://localhost:3000/api/usuarios/${professorId}`,
             headers: {
               'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
@@ -142,7 +141,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'POST',
-      url: 'https://projeto-pi-zk6e.onrender.com/api/disciplinas',
+      url: 'http://localhost:3000/api/disciplinas',
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
         'Content-Type': 'application/json'
@@ -168,7 +167,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'POST',
-      url: `https://projeto-pi-zk6e.onrender.com/api/disciplinas/${disciplinaId}/add-professor`,
+      url: `http://localhost:3000/api/disciplinas/${disciplinaId}/add-professor`,
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
         'Content-Type': 'application/json'
@@ -193,7 +192,7 @@ $(document).ready(function() {
     professores.forEach(professorId => {
       $.ajax({
         type: 'DELETE',
-        url: `https://projeto-pi-zk6e.onrender.com/api/disciplinas/${disciplinaId}/remove-professor/${professorId}`,
+        url: `http://localhost:3000/api/disciplinas/${disciplinaId}/remove-professor/${professorId}`,
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
