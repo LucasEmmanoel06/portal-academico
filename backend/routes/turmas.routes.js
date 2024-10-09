@@ -14,4 +14,7 @@ router.get('/:id/alunos', authMiddleware, turmasController.getAlunosByTurmaId);
 router.post('/:id/add-aluno', turmasController.addAlunotoTurma);
 router.delete('/:id/remove-aluno/:alunoId', turmasController.removeAlunofromTurma);
 
+// Nova rota para obter disciplinas por turma
+router.get('/:id/disciplinas', authMiddleware, turmasController.getDisciplinasByTurmaId);
+
 module.exports = router;

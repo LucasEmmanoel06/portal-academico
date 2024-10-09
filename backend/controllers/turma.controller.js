@@ -1,4 +1,5 @@
 const Turma = require('../models/turmas.models');
+const Disciplina = require('../models/disciplinas.models');
 const Usuario = require('../models/usuarios.models');
 
 // @desc    Get all turmas
@@ -91,6 +92,17 @@ exports.getAlunosByTurmaId = async (req, res) => {
   }
 };
 
+// @desc    Get disciplinas by turma id
+// @route   GET /api/turmas/:id/disciplinas
+// @access  Public
+exports.getDisciplinasByTurmaId = async (req, res) => {
+  try {
+    const disciplinas = await Disciplina.find({ turmas: req.params.id });
+    res.json(disciplinas);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
 // Funcionando
 exports.addAlunotoTurma = async (req, res) => {

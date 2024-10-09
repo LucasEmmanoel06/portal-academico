@@ -22,9 +22,9 @@ $(document).ready(function() {
         const comunicadosContainer = $('#comunicadosContainer');
         comunicadosContainer.empty();
         if (response.length === 0) {
-          comunicadosContainer.append('<div class="col-12 text-center"><p>Não há comunicados</p></div>');
+          comunicadosContainer.append('<div class="col-12 text-center"><h3>Não há comunicados</h3></div>');
         } else {
-          response.forEach(comunicado => {
+          response.reverse().forEach(comunicado => {
             getAutorNome(comunicado.autor, function(nomeAutor) {
               const comunicadoCard = `
                 <div class="col-12 mb-3">
@@ -42,35 +42,45 @@ $(document).ready(function() {
               comunicadosContainer.append(comunicadoCard);
             });
           });
-
-          // Adiciona o evento de clique ao botão "Deletar"
-          $(document).on('click', '.deletar-comunicado', function() {
-            const comunicadoId = $(this).data('id');
-            if (confirm('Tem certeza que deseja deletar este comunicado?')) {
-              $.ajax({
-                url: `http://localhost:3000/api/comunicados/${comunicadoId}`,
-                type: 'DELETE',
-                headers: {
-                  'Authorization': 'Bearer ' + localStorage.getItem('token')
-                },
-                success: function() {
-                  alert('Comunicado deletado com sucesso!');
-                  loadComunicados(); // Recarrega os comunicados após deletar
-                },
-                error: function() {
-                  alert('Erro ao deletar o comunicado.');
-                }
-              });
-            }
-          });
-
         }
       },
       error: function(xhr) {
-        console.log('Erro ao buscar comunicados:', xhr);
+        if (xhr.status === 404) {
+          const comunicadosContainer = $('#comunicadosContainer');
+          comunicadosContainer.empty();
+          comunicadosContainer.append('<div class="col-12 text-center"><h3>Não há comunicados</h3></div>');
+        } else {
+          console.log('Erro ao buscar comunicados:', xhr);
+        }
       }
     });
   }
+
+  // Função para deletar um comunicado
+  function deleteComunicado(comunicadoId) {
+    if (confirm('Tem certeza que deseja deletar este comunicado?')) {
+      $.ajax({
+        url: `http://localhost:3000/api/comunicados/${comunicadoId}`,
+        type: 'DELETE',
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        success: function() {
+          alert('Comunicado deletado com sucesso!');
+          loadComunicados(); // Recarrega os comunicados após deletar
+        },
+        error: function() {
+          alert('Erro ao deletar o comunicado.');
+        }
+      });
+    }
+  }
+
+  // Delegação de eventos para o botão "Deletar"
+  $(document).on('click', '.deletar-comunicado', function() {
+    const comunicadoId = $(this).data('id');
+    deleteComunicado(comunicadoId);
+  });
 
   // Função para buscar e exibir as informações da turma
   function loadTurmaInfo() {
@@ -96,19 +106,47 @@ $(document).ready(function() {
 
         // Esperar todas as requisições de alunos serem concluídas
         Promise.all(alunoPromises).then(alunos => {
-          const alunoNomes = alunos.map(aluno => aluno.nome).join(', ');
-          $('#alunosTurma').text(alunoNomes);
+          if (alunos.length === 0) {
+            $('#alunosTurma').text('Não há alunos na turma');
+          } else {
+            const alunoNomes = alunos.map(aluno => aluno.nome).join(', ');
+            $('#alunosTurma').text(alunoNomes);
 
-          // Preenche a lista de alunos no modal de remoção
-          const alunosList = $('#alunosList');
-          alunosList.empty();
-          alunos.forEach(aluno => {
-            alunosList.append(`<option value="${aluno._id}">${aluno.nome}</option>`);
-          });
+            // Preenche a lista de alunos no modal de remoção
+            const alunosList = $('#alunosList');
+            alunosList.empty();
+            alunos.forEach(aluno => {
+              alunosList.append(`<option value="${aluno._id}">${aluno.nome}</option>`);
+            });
+          }
         });
       },
       error: function(xhr) {
         console.log('Erro ao buscar informações da turma:', xhr);
+      }
+    });
+  }
+
+  // Função para buscar e exibir as disciplinas da turma
+  function loadDisciplinas() {
+    $.ajax({
+      type: 'GET',
+      url: `http://localhost:3000/api/turmas/${turmaId}/disciplinas`,
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      success: function(response) {
+        const disciplinasContainer = $('#disciplinasTurma');
+        disciplinasContainer.empty();
+        if (response.length === 0) {
+          disciplinasContainer.append('Não há disciplinas na turma');
+        } else {
+          const disciplinasNomes = response.map(disciplina => disciplina.nome).join(', ');
+          disciplinasContainer.text(disciplinasNomes);
+        }
+      },
+      error: function(xhr) {
+        console.log('Erro ao buscar disciplinas:', xhr);
       }
     });
   }
@@ -206,6 +244,94 @@ $(document).ready(function() {
     });
   });
 
+  // Função para adicionar uma disciplina à turma
+  $('#addDisciplinaModal').on('show.bs.modal', function() {
+    // Buscar todas as disciplinas ao abrir o modal
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:3000/api/disciplinas',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      success: function(response) {
+        const disciplinaSelect = $('#disciplinaSelect');
+        disciplinaSelect.empty();
+        disciplinaSelect.append('<option value="" disabled selected>--Escolha a disciplina--</option>');
+        response.forEach(disciplina => {
+          disciplinaSelect.append(`<option value="${disciplina._id}">${disciplina.nome}</option>`);
+        });
+      },
+      error: function(xhr) {
+        console.log('Erro ao buscar disciplinas:', xhr);
+      }
+    });
+  });
+
+  $('#addDisciplinaForm').on('submit', function(event) {
+    event.preventDefault();
+    const disciplinaId = $('#disciplinaSelect').val();
+
+    $.ajax({
+      type: 'POST',
+      url: `http://localhost:3000/api/disciplinas/${disciplinaId}/add-turma/${turmaId}`,
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Content-Type': 'application/json'
+      },
+      success: function(response) {
+        $('#addDisciplinaModal').modal('hide');
+        loadDisciplinas(); // Recarrega as disciplinas após adicionar
+      },
+      error: function(xhr) {
+        console.log('Erro ao adicionar disciplina:', xhr);
+      }
+    });
+  });
+
+  // Função para remover uma disciplina da turma
+  $('#removeDisciplinaModal').on('show.bs.modal', function() {
+    // Buscar todas as disciplinas da turma ao abrir o modal
+    $.ajax({
+      type: 'GET',
+      url: `http://localhost:3000/api/turmas/${turmaId}/disciplinas`,
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      },
+      success: function(response) {
+        const disciplinasList = $('#disciplinasList');
+        disciplinasList.empty();
+        response.forEach(disciplina => {
+          disciplinasList.append(`<option value="${disciplina._id}">${disciplina.nome}</option>`);
+        });
+      },
+      error: function(xhr) {
+        console.log('Erro ao buscar disciplinas:', xhr);
+      }
+    });
+  });
+
+  $('#removeDisciplinaForm').on('submit', function(event) {
+    event.preventDefault();
+    const disciplinas = $('#disciplinasList').val(); // Array de IDs das disciplinas selecionadas
+
+    disciplinas.forEach(disciplinaId => {
+      $.ajax({
+        type: 'DELETE',
+        url: `http://localhost:3000/api/disciplinas/${disciplinaId}/remove-turma/${turmaId}`,
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        success: function(response) {
+          $('#removeDisciplinaModal').modal('hide');
+          loadDisciplinas(); // Recarrega as disciplinas após remover
+        },
+        error: function(xhr) {
+          console.log('Erro ao remover disciplina:', xhr);
+        }
+      });
+    });
+  });
+
   // Função de logout
   $('#logoutButton').on('click', function() {
     localStorage.removeItem('token');
@@ -217,7 +343,8 @@ $(document).ready(function() {
     window.location.href = '../login.html';
   });
 
-  // Carrega as informações da turma e os comunicados ao carregar a página
+  // Carrega as informações da turma, os comunicados e as disciplinas ao carregar a página
   loadTurmaInfo();
   loadComunicados();
+  loadDisciplinas();
 });
