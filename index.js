@@ -2,7 +2,7 @@ $(document).ready(function() {
   $('#loginForm').on('submit', function(event) {
     event.preventDefault();
     const formData = {
-      nome: $('#nome').val(),
+      email: $('#email').val(),
       senha: $('#senha').val()
     };
 
