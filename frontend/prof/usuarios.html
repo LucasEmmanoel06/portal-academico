@@ -3,9 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Professor</title>
+  <title>Usuários do Sistema</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
+  <style>
+    .custom-hr {
+      border: 1px solid black;
+    }
+  </style>
 </head>
 <body>
   <!-- Barra de navegação -->
@@ -34,16 +39,43 @@
     </div>
   </nav>
 
-  <!-- Conteúdo principal -->
+  <!-- Título principal -->
+  <div class="container mt-5">
+    <h1 class="text-center">Usuários do Sistema</h1>
+  </div>
+
+  <!-- Contêiner para a lista de usuários -->
   <div class="container mt-4">
-    <h1 class="text-center">Bem-Vindo(a) Professor(a) <span id="nomeProfessor"></span></h1>
-    <div class="row" id="turmasContainer">
-      <!-- As turmas serão inseridas aqui -->
+    <div class="row">
+      <!-- Coordenadores -->
+      <div class="col-12 mb-4">
+        <h3>Coordenadores</h3>
+        <hr class="custom-hr">
+        <ul id="coordenadoresList" class="list-group">
+          <!-- Lista de coordenadores será inserida aqui -->
+        </ul>
+      </div>
+      <!-- Professores -->
+      <div class="col-12 mb-4">
+        <h3>Professores</h3>
+        <hr class="custom-hr">
+        <ul id="professoresList" class="list-group">
+          <!-- Lista de professores será inserida aqui -->
+        </ul>
+      </div>
+      <!-- Alunos -->
+      <div class="col-12 mb-4">
+        <h3>Alunos</h3>
+        <hr class="custom-hr">
+        <ul id="alunosList" class="list-group">
+          <!-- Lista de alunos será inserida aqui -->
+        </ul>
+      </div>
     </div>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-  <script src="professor.js"></script>
+  <script src="usuarios.js"></script>
 </body>
 </html>

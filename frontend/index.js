@@ -2,13 +2,13 @@ $(document).ready(function() {
   $('#loginForm').on('submit', function(event) {
     event.preventDefault();
     const formData = {
-      nome: $('#nome').val(),
+      email: $('#email').val(),
       senha: $('#senha').val()
     };
 
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:3000/api/auth/login',
+      url: 'https://projeto-pi-zk6e.onrender.com/api/auth/login',
       data: JSON.stringify(formData),
       contentType: 'application/json',
       success: function(response) {

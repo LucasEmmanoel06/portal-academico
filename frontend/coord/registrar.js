@@ -1,7 +1,7 @@
 $(document).ready(function() {
   // Verifica se o usuário está autenticado
   if (!localStorage.getItem('token')) {
-    window.location.href = '../login.html';
+    window.location.href = '../index.html';
   }
   
   // Verifica se o usuário logado é coordenador
@@ -22,7 +22,7 @@ $(document).ready(function() {
     const token = localStorage.getItem('token');
 
     $.ajax({
-      url: 'http://localhost:3000/api/auth/registrar',
+      url: 'https://projeto-pi-zk6e.onrender.com/api/auth/registrar',
       type: 'POST',
       contentType: 'application/json',
       headers: {
@@ -59,6 +59,6 @@ $(document).ready(function() {
     localStorage.removeItem('userId');
     localStorage.removeItem('turmaId');
     localStorage.removeItem('turmaNome');
-    window.location.href = '../login.html';
+    window.location.href = '../index.html';
   });
 });

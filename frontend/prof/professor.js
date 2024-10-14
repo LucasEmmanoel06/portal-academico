@@ -5,13 +5,13 @@ $(document).ready(function() {
   }
 
   const nome = localStorage.getItem('nome');
-  $('#nomeCoordenador').text(nome);
+  $('#nomeProfessor').text(nome);
 
   // Função para buscar e exibir as turmas
   function loadTurmas() {
     $.ajax({
       type: 'GET',
-      url: 'https://projeto-pi-zk6e.onrender.com/api/turmas',
+      url: 'https://projeto-pi-zk6e.onrender.com/api/turmas', // Endpoint para obter todas as turmas
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       },
@@ -29,7 +29,6 @@ $(document).ready(function() {
                     <h5 class="card-title">${turma.nome}</h5>
                     <p class="card-text">Ano: ${turma.ano}</p>
                     <a href="#" class="btn btn-primary ver-detalhes" data-id="${turma._id}" data-nome="${turma.nome}">Ver detalhes</a>
-                    <button class="btn btn-danger deletar-turma" data-id="${turma._id}">Deletar</button>
                   </div>
                 </div>
               </div>
@@ -45,28 +44,6 @@ $(document).ready(function() {
             localStorage.setItem('turmaNome', turmaNome);
             window.location.href = 'turma.html';
           });
-
-          // Adiciona o evento de clique ao botão "Deletar"
-          $('.deletar-turma').click(function() {
-            const turmaId = $(this).data('id');
-            if (confirm('Tem certeza que deseja deletar esta turma?')) {
-              $.ajax({
-                url: `https://projeto-pi-zk6e.onrender.com/api/turmas/${turmaId}`,
-                type: 'DELETE',
-                headers: {
-                  'Authorization': 'Bearer ' + localStorage.getItem('token')
-                },
-                success: function() {
-                  alert('Turma deletada com sucesso!');
-                  loadTurmas(); // Recarrega as turmas após deletar
-                },
-                error: function() {
-                  alert('Erro ao deletar a turma.');
-                }
-              });
-            }
-          });
-
         }
       },
       error: function(xhr) {
@@ -74,32 +51,6 @@ $(document).ready(function() {
       }
     });
   }
-
-  // Função para criar uma nova turma
-  $('#createTurmaForm').on('submit', function(event) {
-    event.preventDefault();
-    const formData = {
-      nome: $('#nome').val(),
-      ano: $('#ano').val()
-    };
-
-    $.ajax({
-      type: 'POST',
-      url: 'https://projeto-pi-zk6e.onrender.com/api/turmas',
-      headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        'Content-Type': 'application/json'
-      },
-      data: JSON.stringify(formData),
-      success: function(response) {
-        $('#createTurmaModal').modal('hide');
-        loadTurmas(); // Recarrega as turmas após a criação
-      },
-      error: function(xhr) {
-        console.log('Erro ao criar turma:', xhr);
-      }
-    });
-  });
 
   // Função de logout
   $('#logoutButton').on('click', function() {

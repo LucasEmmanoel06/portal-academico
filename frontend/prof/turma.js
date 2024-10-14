@@ -7,6 +7,7 @@ $(document).ready(function() {
   const turmaId = localStorage.getItem('turmaId');
   const turmaNome = localStorage.getItem('turmaNome');
   const autorId = localStorage.getItem('userId'); // Recupera o ID do usuário do localStorage
+  const userType = localStorage.getItem('tipo'); // Recupera o tipo de usuário do localStorage
   console.log('autorId recuperado:', autorId); // Adicione este log para verificar o autorId
   $('#nomeTurma').text(turmaNome);
 
@@ -26,13 +27,17 @@ $(document).ready(function() {
         } else {
           response.reverse().forEach(comunicado => {
             getAutorNome(comunicado.autor, function(nomeAutor) {
+              let deleteButton = '';
+              if (userType === 'professor' && comunicado.autor === autorId) {
+                deleteButton = `<button class="btn btn-danger deletar-comunicado" data-id="${comunicado._id}">Deletar</button>`;
+              }
               const comunicadoCard = `
                 <div class="col-12 mb-3">
                   <div class="card comunicado-card">
                     <div class="card-body">
                       <div class="d-flex justify-content-between">
                         <h5 class="card-title">${nomeAutor} - ${new Date(comunicado.data).toLocaleString()}</h5>
-                        <button class="btn btn-danger deletar-comunicado" data-id="${comunicado._id}">Deletar</button>
+                        ${deleteButton}
                       </div>
                       <p class="card-text">${comunicado.mensagem}</p>
                     </div>
